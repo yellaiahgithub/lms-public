@@ -16,7 +16,7 @@ pipeline {
 
         stage('Building the docker image') {
             steps {
-                sh 'cd api && docker build -t yellaiahdocker/frontend-k8s .'
+                sh 'cd webapp && docker build -t yellaiahdocker/frontend-k8s .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -39,8 +39,8 @@ pipeline {
             steps {
                 echo 'Deploying....'
                  
-                sh "cd api && kubectl apply -f frontend-deployment.yaml"
-                sh "cd api && kubectl apply -f frontend-load-balancer-service.yaml"
+                sh "cd webapp && kubectl apply -f frontend-deployment.yaml"
+                sh "cd webapp && kubectl apply -f frontend-load-balancer-service.yaml"
                 sh "kubectl rollout restart deployment frontend-deployment"
             }
         }
