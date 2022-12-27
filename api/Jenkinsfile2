@@ -1,0 +1,54 @@
+pipeline {
+    agent{
+       label 'k8s'
+    }
+
+    environment {
+
+    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+     registry = "yellaiahdocker/api"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+    }
+
+    stages {
+        stage('clone the code') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/vm-docker-cicd']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/yellaiahgithub/lms-public-yell.git']]])
+
+            }
+        }
+
+        stage('Building the docker image') {
+            steps {
+                sh 'cd api && docker build -t yellaiahdocker/api .'
+            }
+        }
+        stage('Logging into dockerhub account') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('pushing the docker image into dockerhub') {
+            steps {
+                  sh 'docker push yellaiahdocker/api'
+            }
+        }
+        stage('Remove old docker images') {
+             steps {
+                 sh 'docker rmi -f yellaiahdocker/api'
+            }
+        }
+         stage('creating database container') {
+             steps {
+                 sh 'docker run -d -p 5432:5432  -e  POSTGRES_PASSWORD=password --name lmsdb postgres'
+            }
+        }
+         stage('Running the docker container') {
+            steps {
+                  sh 'docker container rm --force fe'
+                  sh 'docker run -p 8080:8080  -e DATABASE_URL=postgresql://postgres:password@localhost:5432/postgres -e PORT=8080 -e MODE=local  yellaiahdocker/api'
+            }
+        }
+    }
+}
