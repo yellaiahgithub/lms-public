@@ -1,25 +1,22 @@
 pipeline {
-    agent any
+    agent {
+      label 'docker'
+    }
 
     environment {
 
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-     registry = "yellaiahdocker/konalmsap"
+     registry = "yellaiahdocker/frontend-lms"
         registryCredential = 'dockerhub'
         dockerImage = ''
     }
 
     stages {
-        stage('clone the code') {
-            steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/vm-docker-cicd']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/yellaiahgithub/lms-public-yell.git']]])
-
-            }
-        }
+        
 
         stage('Building the docker image') {
             steps {
-                sh 'cd webapp && docker build -t yellaiahdocker/kona-lms .'
+                sh 'cd webapp && docker build -t yellaiahdocker/frontend-lms .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -29,20 +26,18 @@ pipeline {
         }
         stage('pushing the docker image into dockerhub') {
             steps {
-                  sh 'docker push yellaiahdocker/kona-lms'
+                  sh 'docker push yellaiahdocker/frontend-lms'
             }
         }
         stage('Remove old docker images') {
              steps {
-                 sh 'docker rmi -f yellaiahdocker/kona-lms'
-                //sh "docker rmi $registry:$BUILD_NUMBER"
-                //sh "docker rmi $registry:latest"
+                 sh 'docker rmi -f yellaiahdocker/frontend-lms'
             }
         }
          stage('Running the docker container') {
             steps {
                   sh 'docker container rm --force fe'
-                  sh 'docker run -dt -p 8000:80 --name fe yellaiahdocker/kona-lms'
+                  sh 'docker run -dt -p 8000:80 --name fe yellaiahdocker/frontend-lms'
             }
         }
     }
