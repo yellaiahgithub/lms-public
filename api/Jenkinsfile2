@@ -15,7 +15,7 @@ pipeline {
         
          stage('creating  new docker network') {
             steps {
-                sh 'docker network rm lmsnetwork'
+               
                 sh 'docker network create lmsnetwork'
             }
         }
