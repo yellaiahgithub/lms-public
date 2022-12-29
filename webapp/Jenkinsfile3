@@ -1,10 +1,13 @@
 pipeline {
-    agent any
+    agent{
+       label 'k8s'
+
+     }
 
     environment {
 
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-     registry = "yellaiahdocker/kona"
+     registry = "yellaiahdocker/backend-k8s"
         registryCredential = 'dockerhub'
         dockerImage = ''
     }
@@ -13,7 +16,7 @@ pipeline {
 
         stage('Building the docker image') {
             steps {
-                sh 'cd webapp && docker build -t yellaiahdocker/kona .'
+                sh 'cd webapp && docker build -t yellaiahdocker/frontend-k8s .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -23,21 +26,22 @@ pipeline {
         }
         stage('pushing the docker image into dockerhub') {
             steps {
-                  sh 'docker push yellaiahdocker/kona'
+                  sh 'docker push yellaiahdocker/frontend-k8s'
             }
         }
         stage('Remove old docker images') {
              steps {
-                 sh 'docker rmi -f yellaiahdocker/kona'
+                 sh 'docker rmi -f yellaiahdocker/frontend-k8s'
 
             }
         }
          stage('Running on kubernetes') {
             steps {
                 echo 'Deploying....'
-                sh "cd webapp && kubectl apply -f deployment.yml"
-                sh "cd webapp && kubectl apply -f service.yml"
-                sh "kubectl rollout restart deployment konalms"
+                 
+                sh "cd webapp && kubectl apply -f frontend-deployment.yaml"
+                sh "cd webapp && kubectl apply -f frontend-load-balancer-service.yaml"
+                sh "kubectl rollout restart deployment frontend-deployment"
             }
         }
     }
