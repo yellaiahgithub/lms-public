@@ -5,7 +5,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 80
-      targetPort: 800
+    - port: 800
+      targetPort: 80
   selector:
     component: frontend
