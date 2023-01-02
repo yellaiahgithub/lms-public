@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       component: frontend
@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: lms-web
-          imagePullPolicy: Never
+          image: yellaiahdocker/frontend-k8s
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           env:
