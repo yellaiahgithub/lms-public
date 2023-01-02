@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: postgres-pv-claim
   labels:
-    app: postgres
+    component: postgres
 spec:
   storageClassName: manual
   accessModes:
@@ -19,7 +19,7 @@ metadata:
   name: postgres-pv-volume    # Sets PV's name
   labels:
     type: local   # Sets PV's type to local
-    app: postgres
+    component: postgres
 spec:
   storageClassName: manual
   capacity:
