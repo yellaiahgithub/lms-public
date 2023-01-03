@@ -33,3 +33,11 @@ spec:
               value: postgres
             - name: DB_PASSWORD
               value: password
+---
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: high-priority
+value: 100
+globalDefault: false
+description: "This priority class should be used for XYZ service pods only."
