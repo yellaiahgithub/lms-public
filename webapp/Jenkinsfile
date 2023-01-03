@@ -39,7 +39,8 @@ pipeline {
             steps {
                 echo 'Deploying....'
                  
-                 sh "cd webapp && kubectl create -f priority-class.yaml"
+                 sh "cd webapp && kubectl delete priority-class.yaml" 
+                sh "cd webapp && kubectl create -f priority-class.yaml"
                 sh "cd webapp && kubectl create -f frontend-deployment.yaml"
                 sh "cd webapp && kubectl create -f frontend-load-balancer-service.yaml"
                 sh "kubectl rollout restart deployment frontend-deployment"
