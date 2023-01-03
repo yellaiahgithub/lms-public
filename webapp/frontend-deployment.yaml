@@ -12,13 +12,13 @@ spec:
       labels:
         component: frontend
     spec:
-      containers:  
+      containers:
         - name: frontend
-          image: yellaiahdocker/frontend-k8
-          imagePullPolicy: Always        
+          image: yellaiahdocker/frontend-k8ss
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
-       env:
+          env:
             - name: MODE
               value: production
             - name: VITE_API_URL
