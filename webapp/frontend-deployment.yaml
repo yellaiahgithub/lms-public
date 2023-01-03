@@ -13,11 +13,12 @@ spec:
         component: frontend
     spec:
       containers:
-        - name: frontend
-          image: yellaiahdocker/frontend-k8ss
-          imagePullPolicy: Always
-          ports:
-            - containerPort: 80
+      - name: frontend
+        image: yellaiahdocker/frontend-k8ss
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+       priorityClassName: high-priority
           env:
             - name: MODE
               value: production
