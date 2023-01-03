@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       component: frontend
@@ -16,12 +16,10 @@ spec:
      
         - name: frontend
           image: yellaiahdocker/frontend-k8
-          imagePullPolicy: Always
-      priorityClassName: high-priority          
+          imagePullPolicy: Always        
           ports:
             - containerPort: 80
-       
-          env:
+       env:
             - name: MODE
               value: production
             - name: VITE_API_URL
