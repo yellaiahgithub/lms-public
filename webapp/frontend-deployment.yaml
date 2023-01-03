@@ -13,7 +13,7 @@ spec:
         component: frontend
     spec:
       containers:
-      priorityClassName: high-priority
+     
         - name: frontend
           image: yellaiahdocker/frontend-k8
           imagePullPolicy: Always
@@ -25,3 +25,4 @@ spec:
               value: production
             - name: VITE_API_URL
               value: api-load-balancer-service
+       priorityClassName: high-priority
