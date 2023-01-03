@@ -16,7 +16,7 @@ pipeline {
 
         stage('Building the docker image') {
             steps {
-                sh 'cd webapp && docker build -t yellaiahdocker/frontend-k8s .'
+                sh 'cd webapp && docker build -t yellaiahdocker/frontend-k8 .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -26,12 +26,12 @@ pipeline {
         }
         stage('pushing the docker image into dockerhub') {
             steps {
-                  sh 'docker push yellaiahdocker/frontend-k8s'
+                  sh 'docker push yellaiahdocker/frontend-k8'
             }
         }
         stage('Remove old docker images') {
              steps {
-                 sh 'docker rmi -f yellaiahdocker/frontend-k8s'
+                 sh 'docker rmi -f yellaiahdocker/frontend-k8'
 
             }
         }
