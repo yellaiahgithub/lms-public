@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: frontend-deployment
 spec:
-  replicas: 1
+  replicas: 
   selector:
     matchLabels:
       component: frontend
@@ -12,13 +12,13 @@ spec:
       labels:
         component: frontend
     spec:
+      priorityClassName: high-priority
       containers:
-      - name: frontend
-        image: yellaiahdocker/frontend-k8ss
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
-       priorityClassName: high-priority
+        - name: frontend
+          image: yellaiahdocker/frontend-k8ss
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
           env:
             - name: MODE
               value: production
