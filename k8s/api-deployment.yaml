@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: api
-          image: lms-public-api
-          imagePullPolicy: Never
+          image: yellaiahdocker/backend-k8s
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
           env:
