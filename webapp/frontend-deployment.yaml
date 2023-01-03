@@ -18,6 +18,7 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+       priorityClassName: high-priority
           env:
             - name: MODE
               value: production
