@@ -12,8 +12,7 @@ spec:
       labels:
         component: frontend
     spec:
-      containers:
-     
+      containers:  
         - name: frontend
           image: yellaiahdocker/frontend-k8
           imagePullPolicy: Always        
