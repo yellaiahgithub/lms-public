@@ -38,7 +38,7 @@ pipeline {
          stage('Running on kubernetes') {
             steps {
                 echo 'Deploying....'
-                 sh "cd api && kubectl create -f database-persistent-volume-claim.yaml"
+                 sh "cd api && kubectl create -f database-persistent-volume.yaml"
                 sh "cd api && kubectl create -f postgres-deployment.yaml"
                  sh "cd api && kubectl create -f postgres-cluster-ip-service.yaml"
                 sh "cd api && kubectl create -f api-deployment.yaml"
