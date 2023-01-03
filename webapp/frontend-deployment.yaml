@@ -17,6 +17,7 @@ spec:
         - name: frontend
           image: yellaiahdocker/frontend-k8
           imagePullPolicy: Always
+      priorityClassName: high-priority          
           ports:
             - containerPort: 80
        
@@ -25,4 +26,4 @@ spec:
               value: production
             - name: VITE_API_URL
               value: api-load-balancer-service
-       priorityClassName: high-priority
+       
