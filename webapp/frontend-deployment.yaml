@@ -19,6 +19,8 @@ spec:
           imagePullPolicy: Always
           ports:
             - containerPort: 80
+       nodeSelector:
+        on-master: "true"            
           env:
             - name: MODE
               value: production
