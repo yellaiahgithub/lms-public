@@ -12,7 +12,6 @@ spec:
       labels:
         component: api
     spec:
-     priorityClassName: high-priority
      containers:
         - name: api
           image: yellaiahdocker/backend-k8s
