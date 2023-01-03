@@ -11,8 +11,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  
- ---
+---
 kind: PersistentVolume  # Create a PV
 apiVersion: v1
 metadata:
