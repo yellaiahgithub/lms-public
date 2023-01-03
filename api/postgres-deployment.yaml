@@ -16,7 +16,8 @@ spec:
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:
-           
+      
+      priorityClassName: high-priority
       containers:
         - name: postgres
           image: postgres
