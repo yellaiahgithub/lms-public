@@ -16,7 +16,7 @@ pipeline {
 
         stage('Building the docker image') {
             steps {
-                sh 'cd webapp && docker build -t yellaiahdocker/frontend-k8ss .'
+                sh 'cd webapp && docker build -t yellaiahdocker/frontend-working .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -26,24 +26,15 @@ pipeline {
         }
         stage('pushing the docker image into dockerhub') {
             steps {
-                  sh 'docker push yellaiahdocker/frontend-k8ss'
+                  sh 'docker push yellaiahdocker/frontend-working'
             }
         }
         stage('Remove old docker images') {
              steps {
-                 sh 'docker rmi -f yellaiahdocker/frontend-k8ss'
+                 sh 'docker rmi -f yellaiahdocker/frontend-working'
 
             }
         }
-         stage('Running on kubernetes') {
-            steps {
-                echo 'Deploying....'
-                 
-        
-                sh "cd webapp && kubectl create -f frontend-deployment.yaml"
-                sh "cd webapp && kubectl create -f frontend-load-balancer-service.yaml"
-                sh "kubectl rollout restart deployment frontend-deployment"
-            }
-        }
+         
     }
 }
