@@ -12,12 +12,10 @@ spec:
       labels:
         component: frontend
     spec:
-      priorityClassName: high-priority
-      nodeSelector:
-        on-master: "true"   
+       
       containers:
         - name: frontend
-          image: yellaiahdocker/frontend-k8ss
+          image: yellaiahdocker/frontend-working
           imagePullPolicy: Always
           ports:
             - containerPort: 80             
