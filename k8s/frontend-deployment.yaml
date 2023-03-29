@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: lms-web
-          imagePullPolicy: Never
+          image: yellaiahdocker/frontend
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
           env:
