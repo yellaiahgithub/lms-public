@@ -14,7 +14,7 @@ pipeline {
         stage('Deploying the code into nginx server') {
             steps {
                 echo 'Deploying....'
-                  sh 'cd webapp && sudo cp -r webapp/dist/*  /var/www/html'
+                  sh 'cd webapp && sudo cp -r /var/lib/jenkins/workspace/lms/webapp/dist/*  /var/www/html'
             }
         }
     }
