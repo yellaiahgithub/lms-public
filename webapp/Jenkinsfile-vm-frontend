@@ -2,20 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Building the code') {
+         stage('Test') {
             steps {
-                echo 'Building..'
-                sh 'cd webapp && npm install'
-                sh 'cd webapp && npm run build'
-
+                echo 'Sonar Analysis'
+                sh 'cd webapp && sudo docker run  --rm -e SONAR_HOST_URL="http://54.91.206.117:9000" -e SONAR_LOGIN="sqp_b5fa24ef380116592dc68d8699112697088bfa26"  -v ".:/usr/src" sonarsource/sonar-scanner-cli -Dsonar.projectKey=lms'
             }
-        }
+        }    
 
-        stage('Deploying the code into nginx server') {
-            steps {
-                echo 'Deploying....'
-                  sh 'cd webapp && sudo cp -r /var/lib/jenkins/workspace/lms/webapp/dist/*  /var/www/html'
-            }
-        }
     }
 }
