@@ -6,23 +6,17 @@ pipeline {
     environment {
 
     DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-     registry = "yellaiahdocker/backend-lms"
+     registry = "yellaiahdocker/api-backend"
         registryCredential = 'dockerhub'
         dockerImage = ''
     }
 
     stages {
         
-         stage('creating  new docker network') {
-            steps {
-               
-                sh 'docker network create lmsnetwork'
-            }
-        }
 
         stage('Building the docker image') {
             steps {
-                sh 'cd api && docker build -t yellaiahdocker/backend-lms .'
+                sh 'cd api && docker build -t yellaiahdocker/api-backend .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -32,12 +26,12 @@ pipeline {
         }
         stage('pushing the docker image into dockerhub') {
             steps {
-                  sh 'docker push yellaiahdocker/backend-lms'
+                  sh 'docker push yellaiahdocker/api-backend'
             }
         }
         stage('Remove old docker images') {
              steps {
-                 sh 'docker rmi -f yellaiahdocker/backend-lms'
+                 sh 'docker rmi -f yellaiahdocker/api-backend'
             }
         }
          stage('creating database container') {
@@ -49,7 +43,7 @@ pipeline {
          stage('Running the docker container') {
             steps {
                   sh 'docker container rm --force backend'
-                  sh 'docker run -d -p 8080:8080 --network lmsnetwork -e DATABASE_URL=postgresql://postgres:password@lmsdb:5432/postgres --name backend -e PORT=8080 -e MODE=local  yellaiahdocker/backend-lms'
+                  sh 'docker run -d -p 8080:8080 --network lmsnetwork -e DATABASE_URL=postgresql://postgres:password@lmsdb:5432/postgres --name backend -e PORT=8080 -e MODE=local  yellaiahdocker/api-backend'
             }
         }
     }
