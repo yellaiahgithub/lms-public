@@ -1,13 +1,13 @@
 pipeline {
     agent{
-       label 'docker'
+       label 'lms'
     }
 
     environment {
 
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    DOCKERHUB_CREDENTIALS = credentials('docker-hub')
      registry = "yellaiahdocker/api-backend"
-        registryCredential = 'dockerhub'
+        registryCredential = 'docker-hub'
         dockerImage = ''
     }
 
