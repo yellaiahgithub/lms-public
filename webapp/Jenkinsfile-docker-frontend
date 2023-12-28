@@ -17,6 +17,7 @@ pipeline {
         stage('Building the docker image') {
             steps {
                 sh 'cd webapp && docker build -t yellaiahdocker/lms-webapp .'
+            }
         }
         stage('Logging into dockerhub account') {
             steps {
