@@ -5,7 +5,7 @@ pipeline {
 
     environment {
 
-    DOCKERHUB_CREDENTIALS = credentials('docke-rhub')
+    DOCKERHUB_CREDENTIALS = credentials('docker-hub')
      registry = "yellaiahdocker/lms-webapp"
         registryCredential = 'docker-hub'
         dockerImage = ''
