@@ -1,14 +1,14 @@
 pipeline {
     agent{
-       label 'eks'
+       label 'k8s'
 
      }
 
     environment {
 
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-     registry = "yellaiahdocker/backend-k8s"
-        registryCredential = 'dockerhub'
+    DOCKERHUB_CREDENTIALS = credentials('docker-hub')
+     registry = "yellaiahdocker/new-webapp"
+        registryCredential = 'docker-hub'
         dockerImage = ''
     }
 
@@ -16,7 +16,7 @@ pipeline {
 
         stage('Building the docker image') {
             steps {
-                sh 'cd webapp && docker build -t yellaiahdocker/frontend-working .'
+                sh 'cd webapp && docker build -t yellaiahdocker/new-webapp .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -26,15 +26,23 @@ pipeline {
         }
         stage('pushing the docker image into dockerhub') {
             steps {
-                  sh 'docker push yellaiahdocker/frontend-working'
+                  sh 'docker push yellaiahdocker/new-webapp'
             }
         }
         stage('Remove old docker images') {
              steps {
-                 sh 'docker rmi -f yellaiahdocker/frontend-working'
+                 sh 'docker rmi -f yellaiahdocker/new-webapp'
 
             }
         }
-         
+         stage('Running on kubernetes') {
+            steps {
+                echo 'Deploying....'
+               
+                 
+                sh "cd webapp && kubectl apply  -f  frontend-deployment.yaml"
+                sh "cd webapp && kubectl apply  -f  frontend-load-balancer-service.yaml"
+            }
+        }
     }
 }
