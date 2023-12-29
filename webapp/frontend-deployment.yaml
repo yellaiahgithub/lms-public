@@ -15,7 +15,7 @@ spec:
        
       containers:
         - name: frontend
-          image: yellaiahdocker/frontend-working
+          image: yellaiahdocker/new-webapp
           imagePullPolicy: Always
           ports:
             - containerPort: 80             
