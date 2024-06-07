@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+
+    stages {
+         stage('Test') {
+            steps {
+                echo 'Sonar Analysis'
+            }
+        } 
+
+
+    stage('Build LMS') {
+            steps {
+                echo 'Building..'
+               
+            }
+        }
+
+        stage('Release LMS') {
+            steps {
+              
+                    echo "Releasing.."       
+                        
+            }
+            
+        }
+
+        stage('Deploy LMS') {
+            steps {
+               
+                    echo "Deploying.."       
+                    
+            }
+            
+        }
+    }
+}
+
