@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-      label 'lms'
-    }
+    agent any
     stages {
          stage('Test') {
             steps {
