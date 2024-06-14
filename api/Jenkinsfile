@@ -1,14 +1,11 @@
 pipeline {
-    agent{
-       label 'k8s'
-
-     }
+    agent any
 
     environment {
 
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-     registry = "yellaiahdocker/backend-k8s"
-        registryCredential = 'dockerhub'
+    DOCKERHUB_CREDENTIALS = credentials('akhil')
+     registry = "yellaiahdocker/lms-api"
+        registryCredential = 'akhil'
         dockerImage = ''
     }
 
@@ -16,7 +13,7 @@ pipeline {
 
         stage('Building the docker image') {
             steps {
-                sh 'cd api && docker build -t yellaiahdocker/backend-k8s .'
+                sh 'cd api && docker build -t yellaiahdocker/lms-api .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -26,19 +23,18 @@ pipeline {
         }
         stage('pushing the docker image into dockerhub') {
             steps {
-                  sh 'docker push yellaiahdocker/backend-k8s'
+                  sh 'docker push yellaiahdocker/lms-api'
             }
         }
         stage('Remove old docker images') {
              steps {
-                 sh 'docker rmi -f yellaiahdocker/backend-k8s'
+                 sh 'docker rmi -f yellaiahdocker/lms-api'
 
             }
         }
          stage('Running on kubernetes') {
             steps {
                 echo 'Deploying....'
-                 sh "cd api && kubectl apply -f database-persistent-volume-claim.yaml"
                 sh "cd api && kubectl apply -f postgres-deployment.yaml"
                  sh "cd api && kubectl apply -f postgres-cluster-ip-service.yaml"
                 sh "cd api && kubectl apply -f api-deployment.yaml"
