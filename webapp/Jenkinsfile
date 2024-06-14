@@ -1,14 +1,11 @@
 pipeline {
-    agent{
-       label 'k8s'
-
-     }
+    agent any
 
     environment {
 
-    DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-     registry = "yellaiahdocker/backend-k8s"
-        registryCredential = 'dockerhub'
+    DOCKERHUB_CREDENTIALS = credentials('akhil')
+     registry = "yellaiahdocker/lmss-k8s"
+        registryCredential = 'akhil'
         dockerImage = ''
     }
 
@@ -16,7 +13,7 @@ pipeline {
 
         stage('Building the docker image') {
             steps {
-                sh 'cd webapp && docker build -t yellaiahdocker/frontend-k8s .'
+                sh 'cd webapp && docker build -t yellaiahdocker/lmss-k8s .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -26,12 +23,12 @@ pipeline {
         }
         stage('pushing the docker image into dockerhub') {
             steps {
-                  sh 'docker push yellaiahdocker/frontend-k8s'
+                  sh 'docker push yellaiahdocker/lmss-k8s'
             }
         }
         stage('Remove old docker images') {
              steps {
-                 sh 'docker rmi -f yellaiahdocker/frontend-k8s'
+                 sh 'docker rmi -f yellaiahdocker/lmss-k8s'
 
             }
         }
