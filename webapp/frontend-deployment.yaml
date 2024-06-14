@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: yellaiahdocker/frontend-k8s
+          image: yellaiahdocker/lmss-k8s
           imagePullPolicy: Always
           ports:
             - containerPort: 80
